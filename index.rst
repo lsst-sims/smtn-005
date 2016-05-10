@@ -52,11 +52,12 @@ XXX-There is a standard astronomy pipline for reducing the all-sky data (i.e., a
 We attempted to use the stellar photometry catalog to run ubercal on the system.  Unfortunatly, in cloudy conditions the coordinate solution fails and the stars become mis-identified. Ubercal is not robust against this type of error.
 
 Limits of Canon Photometry
---------------------------
+==========================
 
 XXX--spot checking the results of apeture photometry, 
 
 If we want to generate a transparency map to pass to the LSST scheduler, we need to decide on the following parameters:
+
 * Angular resolution on the celestial sphere
 * Temporal resolution (setting the possible exposure time)
 * Maximum extinction the maps should reliably extend to
@@ -66,10 +67,42 @@ These parameters combined with the stellar luminosity function at the galactic p
 
 When we ran ubercal with an nside of XXX, in clear images we were seeing a scatter of ~0.2 mags in the fitted zeropoints.  
 
+We can maximize the signal of the stars by combining the R, G, and B frames together.  Even doing this, each exposure contains ~3,000 stars detected at the 5-sigma level. While that sounds like a lot, most of the stars are concentrated on the Galactic plane, so the galactic poles have very few (and often faint) stars detected by the Canon.  
+
+XXX--maybe drop in a plot of the detected sources. healbin it and show that at sub-LSST FoV levels we don't have many stars to work with.
+
 Cloud Observations With Median Filtered All-Sky Images
 ======================================================
 
 Having established that photometry of bright stars is not adequate, we turn to the possibility of using the all-sky data to at least make masks of cloudy regions of the sky.
 
-For this, we re-reduced the all-sky frames of all of 2015 and the first 4 months of 2016.  We use a single coordinate fit assigning each pixel to a fixed altitude and azimuth. We then convert to RA,Dec for the given exposure and take a median value for all the image pixels in each HEALpixel with an nside=32 (XXX--blah resolution).  This median filtering eliminates stars from the images, and compresses the data so that it only takes 116 Gb for the all the healpix maps from 368 nights.
+For this, we re-reduced the all-sky frames of all of 2015 and the first 4 months of 2016.  We use a single coordinate fit assigning each pixel to a fixed altitude and azimuth. We then convert to RA,Dec for the given exposure and take a median value for all the image pixels in each HEALpixel with an nside=32 (110 arcminute resolution).  This median filtering eliminates stars from the images, and compresses the data so that it only takes 116 Gb for the all the healpix maps from 368 nights. 
+
+We take a median of each healpixel when it is observed during darktime and an airmass less than 3.  
+.. figures made by medmap.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
+
+.. figure:: /_static/median_r.png
+   :name: R-band 
+
+   R-band
+.. figure:: /_static/median_G.png
+   :name: G-band 
+
+   G-band
+.. figure:: /_static/median_B.png
+   :name: B-band 
+
+   B-band
+
+
+To generate a cloud frame, we take a difference image of a frame with the previous frame, smooth the difference image with a 5 degree FWHM Gaussian kernel, and flag pixels that are 3-sigma above or below the original difference image RMS.  
+
+XXX--insert example images that show the frame, diff, median diff
+
+Some possible issues with this method:
+
+* Only the leading edge of large clouds will be detected in the difference image. It may be better to build cloud masks from IR all-sky camera observations, and use the higher resolution optical image to fit the cloud layer altitude and velocity.
+* It may not be possible to detect clouds during dark time as they pass through the galactic poles. This region is dark enough that the difference between a cloudy pole and a clear pole may not be significant in the difference image.
+
+
 
