@@ -47,14 +47,14 @@ LSST has an off-the-shelf Canon camera with a fisheye lens operating at the site
 Photometry with Canon
 =====================
 
-XXX-There is a standard astronomy pipline for reducing the all-sky data (i.e., a random hodge-podge of scripts).  This pipeline converts each Canon cr2 file to three .fits files, runs SExtractor, and fits the coordinate system.  Stellar magnitudes of ~2000 known bright stars are recorded along with the sky brightness measured in an anulus around each star.
+XXX-There is a standard astronomy pipeline for reducing the all-sky data (i.e., a random hodge-podge of scripts).  This pipeline converts each Canon cr2 file to three .fits files, runs SExtractor, and fits the coordinate system.  Stellar magnitudes of ~2000 known bright stars are recorded along with the sky brightness measured in an anulus around each star.
 
 We attempted to use the stellar photometry catalog to run ubercal on the system.  Unfortunatly, in cloudy conditions the coordinate solution fails and the stars become mis-identified. Ubercal is not robust against this type of error.
 
 Limits of Canon Photometry
 ==========================
 
-XXX--spot checking the results of apeture photometry, 
+XXX--spot checking the results of aperture photometry, 
 
 If we want to generate a transparency map to pass to the LSST scheduler, we need to decide on the following parameters:
 
@@ -67,9 +67,12 @@ These parameters combined with the stellar luminosity function at the galactic p
 
 When we ran ubercal with an nside of XXX, in clear images we were seeing a scatter of ~0.2 mags in the fitted zeropoints.  
 
-We can maximize the signal of the stars by combining the R, G, and B frames together.  Even doing this, each exposure contains ~3,000 stars detected at the 5-sigma level. While that sounds like a lot, most of the stars are concentrated on the Galactic plane, so the galactic poles have very few (and often faint) stars detected by the Canon.  
+We can maximize the signal of the stars by combining the R, G, and B frames together.  Even doing this, each exposure contains ~2,000 stars detected at the 3-sigma level. While that sounds like a lot, most of the stars are concentrated on the Galactic plane, so the galactic poles have very few (and often faint) stars detected by the Canon.  
 
-XXX--maybe drop in a plot of the detected sources. healbin it and show that at sub-LSST FoV levels we don't have many stars to work with.
+.. from run_daofind.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
+.. figure:: /_static/example_phot.png
+   :name: All sky sources
+
 
 Cloud Observations With Median Filtered All-Sky Images
 ======================================================
@@ -103,6 +106,25 @@ Some possible issues with this method:
 
 * Only the leading edge of large clouds will be detected in the difference image. It may be better to build cloud masks from IR all-sky camera observations, and use the higher resolution optical image to fit the cloud layer altitude and velocity.
 * It may not be possible to detect clouds during dark time as they pass through the galactic poles. This region is dark enough that the difference between a cloudy pole and a clear pole may not be significant in the difference image.
+
+How Often Would We Dodge Clouds
+===============================
+
+We have 181,397 frames from the all sky camera taken when the sun is below an altitude of 12 degrees.  Doing initial chi-by-eye cuts on what constitutes "kinda cloudy" and "very cloudy", it looks like ~75% of the frames are clear, with no significant clouds, then 5-10% of the time is "partly cloudy" where we might expect the scheduler to benefit from cloud avoidance information, and 10-20% of the time is very cloudy, where the telescope would most likely be closed.
+
+
+.. figure:: /_static/03720_.png
+   :name: all sky 2
+
+   Example of how the all-sky camera can be used to detect clouds. Upper left shows the median-filtered healpixelized all-sky image. Upper right shows the difference with the previos frame. Lower left show the difference image with the median dark-time image. Lower right shows pixels flagged as possibly cloudy.
+.. figure:: /_static/00429_.png
+   :name: all sky 3
+
+   Same as Figure 5, but now the moon is up and a narrow band of clouds are crossing the field.
+
+
+
+
 
 
 
