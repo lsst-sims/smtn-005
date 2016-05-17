@@ -100,7 +100,6 @@ We take a median of each healpixel when it is observed during darktime and an ai
 
 To generate a cloud frame, we take a difference image of a frame with the previous frame, smooth the difference image with a 5 degree FWHM Gaussian kernel, and flag pixels that are 3-sigma above or below the original difference image RMS.  
 
-XXX--insert example images that show the frame, diff, median diff
 
 Some possible issues with this method:
 
@@ -112,6 +111,7 @@ How Often Would We Dodge Clouds
 
 We have 181,397 frames from the all sky camera taken when the sun is below an altitude of 12 degrees.  Doing initial chi-by-eye cuts on what constitutes "kinda cloudy" and "very cloudy", it looks like ~75% of the frames are clear, with no significant clouds, then 5-10% of the time is "partly cloudy" where we might expect the scheduler to benefit from cloud avoidance information, and 10-20% of the time is very cloudy, where the telescope would most likely be closed.
 
+XXX--put in histogram of the cloudyness fraction.  
 
 .. figure:: /_static/03720_.png
    :name: all sky 2
