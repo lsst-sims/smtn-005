@@ -72,6 +72,9 @@ We can maximize the signal of the stars by combining the R, G, and B frames toge
 .. from run_daofind.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
 .. figure:: /_static/example_phot.png
    :name: All sky sources
+   :scale: 100
+
+   Results from searching for 3-sigma point source detections in a clear all-sky camera image.  
 
 
 Cloud Observations With Median Filtered All-Sky Images
@@ -85,20 +88,37 @@ We take a median of each healpixel when it is observed during darktime and an ai
 .. figures made by medmap.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
 
 .. figure:: /_static/median_r.png
-   :name: R-band 
+   :name: R-band
+   :scale: 50
 
    R-band
 .. figure:: /_static/median_G.png
-   :name: G-band 
+   :name: G-band
+   :scale: 50
 
    G-band
 .. figure:: /_static/median_B.png
-   :name: B-band 
+   :name: B-band
+   :scale: 50
 
    B-band
 
 
 To generate a cloud frame, we take a difference image of a frame with the previous frame, smooth the difference image with a 5 degree FWHM Gaussian kernel, and flag pixels that are 3-sigma above or below the original difference image RMS.  
+
+.. _all_sky2:
+.. figure:: /_static/03720_.png
+   :name: all sky 2
+   :scale: 100
+
+   Example of how the all-sky camera can be used to detect clouds. Upper left shows the median-filtered healpixelized all-sky image. Upper right shows the difference with the previous frame. Lower left show the difference image with the median dark-time image. Lower right shows pixels flagged as possibly cloudy.
+.. figure:: /_static/00429_.png
+   :name: all sky 3
+   :scale: 100
+
+   Same as Figure :numref:`all_sky2`, but now the moon is up and a narrow band of clouds are crossing the field.
+
+
 
 
 Some possible issues with this method:
@@ -111,16 +131,18 @@ How Often Would We Dodge Clouds
 
 We have 181,397 frames from the all sky camera taken when the sun is below an altitude of 12 degrees.  Doing initial chi-by-eye cuts on what constitutes "kinda cloudy" and "very cloudy", it looks like ~75% of the frames are clear, with no significant clouds, then 5-10% of the time is "partly cloudy" where we might expect the scheduler to benefit from cloud avoidance information, and 10-20% of the time is very cloudy, where the telescope would most likely be closed.
 
-XXX--put in histogram of the cloudyness fraction.  
+.. figure:: /_static/cloudy_hist.png
+   :name: cloudy hist
+   :scale: 50
 
-.. figure:: /_static/03720_.png
-   :name: all sky 2
+   Histogram of how cloudy each frame is based on our simple cloud detection algorithm.  We find ~75% of the time is clear, 5% is slightly cloudy, and 20% is very cloudy.  
 
-   Example of how the all-sky camera can be used to detect clouds. Upper left shows the median-filtered healpixelized all-sky image. Upper right shows the difference with the previos frame. Lower left show the difference image with the median dark-time image. Lower right shows pixels flagged as possibly cloudy.
-.. figure:: /_static/00429_.png
-   :name: all sky 3
+.. figure:: /_static/cloudy_examples.png
+   :name: cloudyness examples
+   :scale: 100
 
-   Same as Figure 5, but now the moon is up and a narrow band of clouds are crossing the field.
+   Example difference images showing partly cloudy conditions (top row), and clear and very cloudy conditions (bottom row).
+
 
 
 
