@@ -147,8 +147,15 @@ We have 181,397 frames from the all sky camera taken when the sun is below an al
 
    Example difference images showing partly cloudy conditions (top row), and clear and very cloudy conditions (bottom row).
 
+We can also look at how many cloudy and clear frames there are per night.
 
+.. figure:: /_static/cloudy_nights.png
+   :name: cloudy_nights
+   :scale: 100
 
+   A stacked plot showing how many frames in each night are classified as clear (< 2% of pixels cloudy, blue), partly cloudy (up to 5% of pixels masked, green), and very cloudy (> 5% of pixels masked).  
+
+This shows ~60 of nights are nearly entirely clear.  5-10% of nights are also completely cloudy, meaning there would only be a strong demand for cloud avoidance on ~40% of nights.
 
 
 
