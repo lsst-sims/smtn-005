@@ -2,6 +2,7 @@
 id = "SMTN-005"
 series_id = "SMTN"
 canonical_url = "https://smtn-005.lsst.io/"
+date_created = 2016-05-02T20:47:13Z
 github_url = "https://github.com/lsst-sims/smtn-005"
 github_default_branch = "main"
 organization.name = "Vera C. Rubin Observatory"
