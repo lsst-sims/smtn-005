@@ -19,6 +19,11 @@ Using the all-sky camera, see how often it is cloudy and if the current all-sky 
 - GitHub repository: https://github.com/lsst-sims/smtn-005
 - Build system: https://github.com/lsst-sims/smtn-005/actions/
 
+Version 1 has a Zenodo DOI:
+
+.. image:: https://zenodo.org/badge/doi/10.5281/zenodo.51968.svg
+  :target: https://dx.doi.org/10.5281/zenodo.51968
+
 Build this technical note
 =========================
 
