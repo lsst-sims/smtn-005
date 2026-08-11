@@ -4,7 +4,7 @@ Cloud Statistics via All-Sky Camera
 
 .. abstract::
 
-   Using the all-sky camera, see how often it is cloudy and if the current all-sky camera is capable of building transpareny maps.
+   Using the all-sky camera, see how often it is cloudy and if the current all-sky camera is capable of building transparency maps.
 
 ..
   Content of technical report.
@@ -74,16 +74,16 @@ If we want to generate a transparency map to pass to the LSST scheduler, we need
 
 These parameters combined with the stellar luminosity function at the galactic poles set the requirements on the all-sky camera photometry.
 
-When we ran ubercal with an nside of 8 (~7 degree resolution), in clear images we were seeing a scatter of ~0.2 mags in the fitted zeropoints.  
+When we ran ubercal with an nside of 8 (~7 degree resolution), in clear images we were seeing a scatter of ~0.2 mags in the fitted zeropoints.
 
-We can maximize the signal of the stars by combining the R, G, and B frames together.  Even doing this, each exposure contains ~2,000 stars detected at the 3-sigma level. While that sounds like a lot, most of the stars are concentrated on the Galactic plane, so the galactic poles have very few (and often faint) stars detected by the Canon.  
+We can maximize the signal of the stars by combining the R, G, and B frames together.  Even doing this, each exposure contains ~2,000 stars detected at the 3-sigma level. While that sounds like a lot, most of the stars are concentrated on the Galactic plane, so the galactic poles have very few (and often faint) stars detected by the Canon.
 
 .. from run_daofind.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
 .. figure:: /_static/example_phot.png
    :name: All sky sources
    :scale: 100
 
-   Results from searching for 3-sigma point source detections in a clear dark-time all-sky camera image.  
+   Results from searching for 3-sigma point source detections in a clear dark-time all-sky camera image.
 
 
 Cloud Observations With Median Filtered All-Sky Images
@@ -91,9 +91,9 @@ Cloud Observations With Median Filtered All-Sky Images
 
 Having established that photometry of bright stars is not adequate, we turn to the possibility of using the all-sky data to at least make masks of cloudy regions of the sky.
 
-For this, we re-reduced the all-sky frames of all of 2015 and the first 4 months of 2016.  We use a single coordinate fit assigning each pixel to a fixed altitude and azimuth. We then convert to RA,Dec for the given exposure and take a median value for all the image pixels in each HEALpixel with an nside=32 (110 arcminute resolution).  This median filtering eliminates stars from the images, and compresses the data so that it only takes 116 Gb for the all the healpix maps from 368 nights. 
+For this, we re-reduced the all-sky frames of all of 2015 and the first 4 months of 2016.  We use a single coordinate fit assigning each pixel to a fixed altitude and azimuth. We then convert to RA,Dec for the given exposure and take a median value for all the image pixels in each HEALpixel with an nside=32 (110 arcminute resolution).  This median filtering eliminates stars from the images, and compresses the data so that it only takes 116 Gb for the all the healpix maps from 368 nights.
 
-We take a median of each healpixel when it is observed during darktime and an airmass less than 3.  
+We take a median of each healpixel when it is observed during darktime and an airmass less than 3.
 .. figures made by medmap.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
 
 .. figure:: /_static/median_r.png
@@ -113,7 +113,7 @@ We take a median of each healpixel when it is observed during darktime and an ai
    B-band
 
 
-To generate a cloud mask, we take a difference image of a frame with the previous frame, smooth the difference image with a 5 degree FWHM Gaussian kernel, and flag pixels that are 3-sigma above or below the original difference image RMS.  
+To generate a cloud mask, we take a difference image of a frame with the previous frame, smooth the difference image with a 5 degree FWHM Gaussian kernel, and flag pixels that are 3-sigma above or below the original difference image RMS.
 
 .. _all_sky2:
 .. figure:: /_static/03720_.png
@@ -146,7 +146,7 @@ We have 181,397 frames from the all sky camera taken when the sun is below an al
    :name: cloudy hist
    :scale: 50
 
-   Histogram of how cloudy each frame is based on our simple cloud detection algorithm.  We find ~75% of the time is clear, 5% is slightly cloudy, and 20% is very cloudy.  
+   Histogram of how cloudy each frame is based on our simple cloud detection algorithm.  We find ~75% of the time is clear, 5% is slightly cloudy, and 20% is very cloudy.
 
 .. figure:: /_static/cloudy_examples.png
    :name: cloudyness examples
@@ -160,10 +160,6 @@ We can also look at how many cloudy and clear frames there are per night.
    :name: cloudy_nights
    :scale: 100
 
-   A stacked plot showing how many frames in each night are classified as clear (< 2% of pixels cloudy, blue), partly cloudy (up to 5% of pixels masked, green), and very cloudy (> 5% of pixels masked).  
+   A stacked plot showing how many frames in each night are classified as clear (< 2% of pixels cloudy, blue), partly cloudy (up to 5% of pixels masked, green), and very cloudy (> 5% of pixels masked).
 
 This shows ~60 of nights are nearly entirely clear.  5-10% of nights are also completely cloudy, meaning there would only be a strong demand for cloud avoidance on ~40% of nights.
-
-
-
-
