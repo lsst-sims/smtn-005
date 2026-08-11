@@ -42,7 +42,7 @@
 Introduction
 ============
 
-LSST has an off-the-shelf Canon camera with a fisheye lens operating at the site. This camera takes 30 second exposures throughout the night and twilight time. The data is archived at NCSA and can be accessed at ``lsst-dev.ncsa.illinois.edu:/lsst/all-sky``.  Each night generates about 30 Gb of data (gzipped).  The Canon simultaneously takes images in R, G, B Bayer filters.
+LSST has an off-the-shelf Canon camera with a fisheye lens operating at the site. This camera takes 30 second exposures throughout the night and twilight time. The data is archived at USDF and can be accessed at ``s3dflogin-mfa.slac.stanford.edu:/sdf/group/rubin/datasets/all-sky``.  Each night generates about 30 Gb of data (gzipped).  The Canon simultaneously takes images in R, G, B Bayer filters.
 
 Code to generate figures and values for this technote are in the repo `sims_allSkyAnalysis <https://github.com/lsst-sims/sims_allSkyAnalysis>`_.
 
