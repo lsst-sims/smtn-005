@@ -1,10 +1,10 @@
-###################################
-Cloud Statistics via All-Sky Camera
-###################################
+#########################################################
+Cloud Statistics via All-Sky Camera For Rubin Observatory
+#########################################################
 
 .. abstract::
 
-   Using the all-sky camera, see how often it is cloudy and if the current all-sky camera is capable of building transparency maps.
+   Using the all-sky camera, see how often it is cloudy and if the current all-sky camera is capable of building transparency maps for use with the Rubin Observatory scheduler.
 
 ..
   Content of technical report.
@@ -49,16 +49,16 @@ Cloud Statistics via All-Sky Camera
 Introduction
 ============
 
-LSST has an off-the-shelf Canon camera with a fisheye lens operating at the site. This camera takes 30 second exposures throughout the night and twilight time. The data is archived at USDF and can be accessed at ``s3dflogin-mfa.slac.stanford.edu:/sdf/group/rubin/datasets/all-sky``.  Each night generates about 30 Gb of data (gzipped).  The Canon simultaneously takes images in R, G, B Bayer filters.
+LSST has an off-the-shelf Canon camera with a fisheye lens operating at the site. This camera takes 30-second exposures throughout the night and twilight time. The data is archived at USDF and can be accessed at ``s3dflogin-mfa.slac.stanford.edu:/sdf/group/rubin/datasets/all-sky``.  Each night generates about 30 Gb of data (gzipped).  The Canon simultaneously takes images in R, G, B Bayer filters.
 
 Code to generate figures and values for this technote are in the repo `sims_allSkyAnalysis <https://github.com/lsst-sims/sims_allSkyAnalysis>`_.
 
 Photometry with Canon
 =====================
 
-There is a standard astronomy pipeline for reducing the all-sky data (i.e., a random hodge-podge of scripts).  This pipeline converts each Canon cr2 file to three .fits files, runs SExtractor, and fits the coordinate system.  Stellar magnitudes of ~2000 known bright stars are recorded along with the sky brightness measured in an annulus around each star.
+There is a standard astronomy pipeline for reducing the all-sky data (i.e., a random hodgepodge of scripts) :cite:p:`2022ApJ...935..167A`.  This pipeline converts each Canon cr2 file to three .fits files, runs SExtractor, and fits the coordinate system.  Stellar magnitudes of ~2000 known bright stars are recorded along with the sky brightness measured in an annulus around each star.
 
-We attempted to use the stellar photometry catalog to run ubercal on the system.  Unfortunately, in cloudy conditions the coordinate solution fails and the stars become mis-identified. Ubercal is not robust against this type of error.
+We attempted to use the stellar photometry catalog to run ubercal on the system.  Unfortunately, in cloudy conditions the coordinate solution fails, and the stars become mis-identified. Ubercal is not robust against this type of error.
 
 Limits of Canon Photometry
 ==========================
@@ -74,7 +74,7 @@ If we want to generate a transparency map to pass to the LSST scheduler, we need
 
 These parameters combined with the stellar luminosity function at the galactic poles set the requirements on the all-sky camera photometry.
 
-When we ran ubercal with an nside of 8 (~7 degree resolution), in clear images we were seeing a scatter of ~0.2 mags in the fitted zeropoints.
+When we ran ubercal with an nside of 8 (~7 degree resolution), in clear images we were seeing a scatter of ~0.2 mags in the fitted zero points.
 
 We can maximize the signal of the stars by combining the R, G, and B frames together.  Even doing this, each exposure contains ~2,000 stars detected at the 3-sigma level. While that sounds like a lot, most of the stars are concentrated on the Galactic plane, so the galactic poles have very few (and often faint) stars detected by the Canon.
 
@@ -91,9 +91,9 @@ Cloud Observations With Median Filtered All-Sky Images
 
 Having established that photometry of bright stars is not adequate, we turn to the possibility of using the all-sky data to at least make masks of cloudy regions of the sky.
 
-For this, we re-reduced the all-sky frames of all of 2015 and the first 4 months of 2016.  We use a single coordinate fit assigning each pixel to a fixed altitude and azimuth. We then convert to RA,Dec for the given exposure and take a median value for all the image pixels in each HEALpixel with an nside=32 (110 arcminute resolution).  This median filtering eliminates stars from the images, and compresses the data so that it only takes 116 Gb for the all the healpix maps from 368 nights.
+For this, we re-reduced the all-sky frames of all of 2015 and the first 4 months of 2016.  We use a single coordinate fit assigning each pixel to a fixed altitude and azimuth. We then convert to RA,Dec for the given exposure and take a median value for all the image pixels in each HEALpixel with an nside=32 (110 arc minute resolution).  This median filtering eliminates stars from the images, and compresses the data so that it only takes 116 Gb for the all the HEALpix maps from 368 nights.
 
-We take a median of each healpixel when it is observed during darktime and an airmass less than 3.
+We take a median of each HEALpixel when it is observed during dark time and an airmass less than 3.
 .. figures made by medmap.py in https://github.com/lsst-sims/sims_allSkyAnalysis/tree/master/python
 
 .. figure:: /_static/median_r.png
@@ -120,12 +120,12 @@ To generate a cloud mask, we take a difference image of a frame with the previou
    :name: all sky 2
    :scale: 100
 
-   Example of how the all-sky camera can be used to detect clouds. Upper left shows the median-filtered healpixelized all-sky image (rotated so zenith is in the center). Upper right shows the difference with the previous frame. Lower left show the difference of the frame with the median dark-time image. Lower right shows pixels flagged as possibly cloudy.
+   Example of how the all-sky camera can be used to detect clouds. Upper left shows the median-filtered HEALpixelized all-sky image (rotated, so zenith is in the center). Upper right shows the difference with the previous frame. Lower left show the difference of the frame with the median dark-time image. Lower right shows pixels flagged as possibly cloudy.
 .. figure:: /_static/00429_.png
    :name: all sky 3
    :scale: 100
 
-   Same as Figure :numref:`all_sky2`, but now the moon is up and a narrow band of clouds are crossing the field.
+   Same as Figure :numref:`all_sky2`, but now the moon is up and a narrowband of clouds is crossing the field.
 
 
 Some possible issues with detecting clouds on the difference image:
@@ -140,7 +140,7 @@ We should explore the possibility of using an IR all-sky camera rather than or i
 How Often Would We Dodge Clouds
 ===============================
 
-We have 181,397 frames from the all sky camera taken when the sun is below an altitude of 12 degrees.  Doing initial chi-by-eye cuts on what constitutes "kinda cloudy" and "very cloudy", it looks like ~75% of the frames are clear, with no significant clouds, then 5-10% of the time is "partly cloudy" where we might expect the scheduler to benefit from cloud avoidance information, and 10-20% of the time is very cloudy, where the telescope would most likely be closed.  These numbers could change slightly with a more robust cloud detection algorithm, but this is consistent with the results from other surveys that find conditions are usually "clear" or "completely cloudy" with a very small fraction of time where it is partly cloudy and one would want to actively avoid clouds and target sucker holes.
+We have 181,397 frames from the all sky camera taken when the sun is below an altitude of 12 degrees.  Doing initial chi-by-eye cuts on what constitutes "kinda cloudy" and "very cloudy", it looks like ~75% of the frames are clear, with no significant clouds, then 5-10% of the time is "partly cloudy" where we might expect the scheduler to benefit from cloud avoidance information, and 10-20% of the time is very cloudy, where the telescope would most likely be closed.  These numbers could change slightly with a more robust cloud detection algorithm, but this is consistent with the results from other surveys that find conditions are usually "clear" or "completely cloudy" with a very small fraction of time when it is partly cloudy and one would want to actively avoid clouds and target sucker holes.
 
 .. figure:: /_static/cloudy_hist.png
    :name: cloudy hist
@@ -163,3 +163,7 @@ We can also look at how many cloudy and clear frames there are per night.
    A stacked plot showing how many frames in each night are classified as clear (< 2% of pixels cloudy, blue), partly cloudy (up to 5% of pixels masked, green), and very cloudy (> 5% of pixels masked).
 
 This shows ~60 of nights are nearly entirely clear.  5-10% of nights are also completely cloudy, meaning there would only be a strong demand for cloud avoidance on ~40% of nights.
+
+.. .. bibliography:: local.bib lsstbib/books.bib lsstbib/lsst.bib lsstbib/lsst-dm.bib lsstbib/refs.bib lsstbib/refs_ads.bib
+
+.. bibliography::
