@@ -1,0 +1,19 @@
+[technote]
+id = "SMTN-005"
+series_id = "SMTN"
+canonical_url = "https://smtn-005.lsst.io/"
+date_created = 2016-05-02T20:47:13Z
+github_url = "https://github.com/lsst-sims/smtn-005"
+github_default_branch = "main"
+doi = "https://dx.doi.org/10.5281/zenodo.51968"
+organization.name = "Vera C. Rubin Observatory"
+organization.ror = "https://ror.org/048g3cy84"
+license.id = "CC-BY-4.0"
+[[technote.authors]]
+name = {given = "Peter", family = "Yoachim"}
+internal_id = "yoachimp"
+orcid = "https://orcid.org/0000-0003-2874-6464"
+[[technote.authors.affiliations]]
+name = "University of Washington"
+internal_id = "Washington"
+ror = "https://ror.org/00cvxb145"
