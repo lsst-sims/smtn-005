@@ -49,14 +49,14 @@ Cloud Statistics via All-Sky Camera For Rubin Observatory
 Introduction
 ============
 
-LSST has an off-the-shelf Canon camera with a fisheye lens operating at the site. This camera takes 30-second exposures throughout the night and twilight time. The data is archived at USDF and can be accessed at ``s3dflogin-mfa.slac.stanford.edu:/sdf/group/rubin/datasets/all-sky``.  Each night generates about 30 Gb of data (gzipped).  The Canon simultaneously takes images in R, G, B Bayer filters.
+Rubin Observatory has an off-the-shelf Canon camera with a fisheye lens operating at the site. This camera takes 30-second exposures throughout the night and twilight time. The data is archived at USDF and can be accessed at ``s3dflogin-mfa.slac.stanford.edu:/sdf/group/rubin/datasets/all-sky``.  Each night generates about 30 Gb of data (gzipped).  The Canon simultaneously takes images in R, G, B Bayer filters.
 
 Code to generate figures and values for this technote are in the repo `sims_allSkyAnalysis <https://github.com/lsst-sims/sims_allSkyAnalysis>`_.
 
 Photometry with Canon
 =====================
 
-There is a standard astronomy pipeline for reducing the all-sky data (i.e., a random hodgepodge of scripts) :cite:p:`2022ApJ...935..167A`.  This pipeline converts each Canon cr2 file to three .fits files, runs SExtractor, and fits the coordinate system.  Stellar magnitudes of ~2000 known bright stars are recorded along with the sky brightness measured in an annulus around each star.
+There is a standard astronomy pipeline for reducing the all-sky data (i.e., a random hodgepodge of scripts) based on Astropy :cite:p:`2022ApJ...935..167A`.  This pipeline converts each Canon cr2 file to three .fits files, runs SExtractor, and fits the coordinate system.  Stellar magnitudes of ~2000 known bright stars are recorded along with the sky brightness measured in an annulus around each star.
 
 We attempted to use the stellar photometry catalog to run ubercal on the system.  Unfortunately, in cloudy conditions the coordinate solution fails, and the stars become mis-identified. Ubercal is not robust against this type of error.
 
@@ -65,7 +65,7 @@ Limits of Canon Photometry
 
 Doing quick aperture photometry on some clear Canon frames reveals that the RMS variation on repeated measurements of the same star are a factor of 2-3 higher than expected from Poisson statistics.  Even if all the flux from all the Bayer filters are combined, the noise level stays high.  Therefore, to construct a transparency map out of the all-sky images, one would need more stars to compensate for the low-precision photometry.
 
-If we want to generate a transparency map to pass to the LSST scheduler, we need to decide on the following parameters:
+If we want to generate a transparency map to pass to the LSST scheduler :cite:p:`2019AJ....157..151N`, we need to decide on the following parameters:
 
 * Angular resolution on the celestial sphere
 * Temporal resolution (setting the possible exposure time)
